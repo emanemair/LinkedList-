@@ -438,41 +438,67 @@ bool orderedList<type>::search(const type& item)
 template<class type> 
 void orderedList<type>::insert(const type& item)
 {
-	nodeType<type>* newNode; 
-	nodeType < type>*current; 
-	nodeType<type>* trailCurrent; 
-	bool found; 
-
-	newNode = new nodeTyppe<type>; 
-	newNode->data = item; 
-	newNode->next = 0; 
-
-	if (first == 0)//empty list
+	if (search(item))
+		cout << "the item exist in the list " << endl; 
+	else
 	{
-		first = last = newNode; 
-		count++; 
-	}
-	else {
-		found = false; 
-		current = first; 
-		while (current != 0 && !found)
+		nodeType<type>* newNode;
+		nodeType < type>* current;
+		nodeType<type>* trailCurrent;
+		bool found;
+
+		newNode = new nodeTyppe<type>;
+		newNode->data = item;
+		newNode->next = 0;
+
+		if (first == 0)//empty list
 		{
-			if (current->data >= found) 
+			first = last = newNode;
+			count++;
+		}
+		else {
+			found = false;
+			current = first;
+			while (current != 0 && !found)
 			{
-				found= true 
+				if (current->data >= found)
+				{
+					found = true
+				}
+				else
+				{
+					trailCuurent = current;
+					current = current->next;
+				}
+			}// end while 
+			if (current == first)
+			{
+				newNode->next = first;
+				first = newNode;
+				count++;
 			}
 			else
 			{
-				trailCuurent = current; 
-				current = current->next; 
+				trailCurrent->next = newNode;
+				newNode->next = current;
+				if (current == 0)
+					last = newNode;
+				count++;
 			}
-		}// end while 
-		if (current == first 
-		{
-				newNode->next = first; 
-				first = newNode; 
-				count++; 
 		}
 	}
-
 }
+
+
+template<class type> 
+void orderedList<type>::insertFirst(const type& item)
+{
+	this->insert(item); 
+}//end insertfirst 
+
+template<class type> 
+void orderedList<type>::insertLast(const type& item)
+{
+	this->insert(item); 
+}// end insertLast 
+
